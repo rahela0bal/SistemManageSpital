@@ -1,0 +1,33 @@
+package ro.emanuel.helpers;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Properties;
+
+public class DBHelper {
+private static Connection con;
+	
+	public static Connection getConnection() throws SQLException, ClassNotFoundException{
+		Class.forName("com.mysql.cj.jdbc.Driver");
+
+		if (con == null ||con.isClosed()) {
+			Properties connectionProps = new Properties();
+			connectionProps.put("user", "root");
+			connectionProps.put("password", "");
+
+			con = DriverManager.getConnection("jdbc:mysql://localhost:3306/spital", connectionProps);
+		}
+		
+		return con;
+	}
+	
+	
+	public static void closeConnection() throws SQLException {
+		if(con.isClosed() == false) {
+			con.close();
+		}
+	}
+
+
+}
